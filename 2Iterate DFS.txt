@@ -1,0 +1,29 @@
+graph = {
+    'S': ['A', 'C'],
+    'A': ['D', 'B'],
+    'C': ['E', 'G'],
+    'D': ['F', 'H'],
+    'B': [],
+    'E': ['I'],
+    'G': [],
+    'F': [],
+    'H': [],
+    'I': []
+}
+
+def DLS(node, limit, visited):
+    visited.append(node)
+    if limit <= 0:
+        return
+    for neighbor in graph.get(node, []):
+        DLS(neighbor, limit - 1, visited)
+
+def IDDFS(start, max_depth):
+    for depth in range(max_depth + 1):
+        visited = []
+        DLS(start, depth, visited)
+        print(f"Depth {depth}: Nodes visited = {visited}")
+
+start_node = 'S'
+max_search_depth = 3
+IDDFS(start_node, max_search_depth)

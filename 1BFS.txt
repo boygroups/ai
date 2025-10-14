@@ -1,0 +1,37 @@
+import queue as q
+from RMP import dict_gn
+
+start = 'Arad'
+goal = 'Bucharest'
+result = ""
+
+def BFS(city, cityq , visitedq):
+    global result
+
+    if city == start:
+        result += city + " "
+        visitedq.put(city)
+
+    for eachcity in dict_gn[city].keys():
+        if eachcity == goal :
+            result += eachcity
+            return
+
+        if eachcity not in list(cityq.queue) and eachcity not in list(visitedq.queue) :
+            cityq.put(eachcity)
+            result += eachcity + " "
+            visitedq.put(eachcity)
+
+
+    if not cityq.empty():
+        BFS(cityq.get(), cityq , visitedq)
+
+def main():
+    cityq = q.Queue()
+    visitedq = q.Queue()
+    BFS(start, cityq , visitedq)
+    print("BFS Transverse form ", start ,"to" , goal , "Is : ")
+    print(result)
+
+main()
+    

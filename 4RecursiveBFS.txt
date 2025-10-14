@@ -1,0 +1,49 @@
+graph = {
+    'A': [('B', 5), ('C', 4), ('D', 5)],
+    'B': [('E', 7)],
+    'C': [('E', 9), ('F', 7)],
+    'D': [('F', 4)],
+    'E': [('G', 4)],
+    'F': [('G', 6)],
+    'G': []
+}
+
+heuristic = {
+    'A': 12, 'B': 12, 'C': 10, 'D': 7,
+    'E': 2, 'F': 6, 'G': 0
+}
+
+def rbfs(node, goal, g, f_limit):
+    if node == goal:
+        return [node], g
+
+    successors = []
+    for child, cost in graph[node]:
+        f = g + cost + heuristic[child]
+        successors.append((child, g + cost, f))
+
+    if not successors:
+        return None, float('inf')
+
+    successors.sort(key=lambda x: x[2])
+
+    while successors:
+        best = successors[0]
+        best_node, best_g, best_f = best
+        alternative = successors[1][2] if len(successors) > 1 else float('inf')
+
+        if best_f > f_limit:
+            return None, best_f
+
+        result, new_f = rbfs(best_node, goal, best_g, min(f_limit, alternative))
+        successors[0] = (best_node, best_g, new_f)
+        successors.sort(key=lambda x: x[2])
+
+        if result is not None:
+            return [node] + result, new_f
+
+    return None, float('inf')
+
+path, cost = rbfs('A', 'G', 0, float('inf'))
+print("Path:", ' → '.join(path))
+print("Total Cost:", cost)

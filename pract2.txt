@@ -1,0 +1,102 @@
+1.addition.java=
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package server;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+/**
+ *
+ * @author AMIT YADAV
+ */
+@WebService(serviceName = "adddition")
+public class adddition {
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "add")
+    public String add(@WebParam(name = "a") float a, @WebParam(name = "b") float b) {
+        //TODO write your implementation code here:
+        return "addition of two number is:"+(a+b);
+    }
+
+   
+}
+
+2.input.jsp=
+<%-- 
+    Document   : input
+    Created on : 16 Nov, 2025, 6:27:31 PM
+    Author     : AMIT YADAV
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+           <form action="output.jsp">
+            <pre>
+enter the number1:<input type="number" name="n1">
+enter the number2:<input type="number" name="n2">
+<input type="submit">
+<input type="reset">
+            </pre>
+
+        </form>
+    </body>
+</html>
+
+3.output.jsp=
+<%-- 
+    Document   : output
+    Created on : 16 Nov, 2025, 6:27:44 PM
+    Author     : AMIT YADAV
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>    <%-- start web service invocation --%><hr/>
+    <%
+    try {
+	client.Adddition_Service service = new client.Adddition_Service();
+	client.Adddition port = service.getAddditionPort();
+	 // TODO initialize WS operation arguments here
+	float a = Float.parseFloat(request.getParameter("n1"));
+	float b = Float.parseFloat(request.getParameter("n2"));;
+	// TODO process result here
+	java.lang.String result = port.add(a, b);
+	out.println("Result = "+result);
+    } catch (Exception ex) {
+	// TODO handle custom exceptions here
+    }
+    %>
+    <%-- end web service invocation --%><hr/>
+
+        
+    </body>
+</html>
+
+if ask for the soap request do only the following  above the 3 codes if ask for the .net or .java then perform this,this is .net part=
+
+4.in idle python=
+from zeep import Client
+wsdl_url='http://localhost:8080/WebApplication2/addition?wsdl'  #copy the url from web service client
+client=Client(wsdl_url)
+result=client.service.add(10,20)
+print(result)
+

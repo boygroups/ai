@@ -1,0 +1,13 @@
+4
+"rupees" + a +"in dollars is"+(a/88.65)
+
+
+5
+<form action ="output.jsp">
+            <pre>
+enter the currency in rupees:<input type ="text"name="t1">
+            </pre>
+        </form>
+
+6
+double a = Double.parseDouble(request.getParameter("t1"));
